@@ -1,0 +1,15 @@
+*.zip
+changelog.md
+
+*.log
+*.tmp
+*.bak
+*.swp
+*.DS_Store
+.idea/
+.vscode/
+node_modules/
+vendor/
+.env
+debug.log
+wp-config.php
