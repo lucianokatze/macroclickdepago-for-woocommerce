@@ -1,0 +1,109 @@
+.macrocdp-admin {
+    max-width: 1200px;
+    margin: 20px;
+}
+
+.macrocdp-logo {
+    height: 30px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.macrocdp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.macrocdp-status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.macrocdp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat-box {
+    text-align: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    color: #2271b1;
+}
+
+.stat-label {
+    display: block;
+    margin-top: 5px;
+    color: #50575e;
+}
+
+.macrocdp-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.macrocdp-actions .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 16px;
+}
+
+.macrocdp-actions .dashicons {
+    margin-right: 8px;
+}
+
+.order-status {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-completed { background: #c6e1c6; color: #5b841b; }
+.status-processing { background: #c8d7e1; color: #2e4453; }
+.status-pending { background: #f8dda7; color: #94660c; }
+.status-failed { background: #eba3a3; color: #761919; }
+
+.mode-test { color: #856404; background-color: #fff3cd; padding: 2px 6px; border-radius: 3px; }
+.mode-live { color: #155724; background-color: #d4edda; padding: 2px 6px; border-radius: 3px; }
+
+.active { color: #28a745; }
+.inactive { color: #dc3545; }
