@@ -1,6 +1,6 @@
 # Macro Click de Pago for WooCommerce
 
-**Versión:** 1.0.0  
+**Versión:** 1.0.1
 **Autor:** Luciano Katze  
 **Plugin URI:** [https://github.com/lucianokatze/macroclickdepago-for-woocommerce](https://github.com/lucianokatze/macroclickdepago-for-woocommerce)
 
@@ -108,9 +108,19 @@ Si encuentras algún problema o tienes alguna consulta, por favor revisa la secc
 
 ## Changelog
 
+- **1.0.1:** Versión actual.
 - **1.0.0:** Versión inicial.
 
 ## Licencia
 
 Este plugin está licenciado bajo la [GPL-2.0+](https://www.gnu.org/licenses/gpl-2.0.html).
 Si necesitás ayuda adicional o encontrás algún problema, podés contactarnos en [https://ckdyd.net/contacto](https://ckdyd.net/contacto). También estamos disponibles para ofrecer soporte técnico y actualizaciones del plugin.
+
+## Créditos
+
+Este proyecto utiliza [Parsedown](http://parsedown.org), una biblioteca de PHP para analizar y renderizar Markdown.
+
+- **Autor:** Emanuil Rusev  
+- **Sitio web:** [http://erusev.com](http://erusev.com)  
+
+Para más información sobre la licencia, revisá el archivo `LICENSE` incluido con esta fuente.

@@ -13,7 +13,15 @@
  * Requires PHP: 7.4
  * WC requires at least: 4.0
  * WC tested up to: 7.0
+ * WooCommerce HPOS Compatible: true
  */
+
+// Agregar soporte HPOS
+add_action('before_woocommerce_init', function() {
+    if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+    }
+});
 
 add_filter("woocommerce_payment_gateways", "pluspagos_add_gateway_class");
 
@@ -88,7 +96,7 @@ function pluspagos_init_gateway_class() {
                     "title" => "URL para cancelar el pedido",
                     "type" => "text",
                     "description" => "Ingrese la URL en caso de cancelar el pedido",
-                    "default" => "https://ckdyd.net/mi-cuenta/orders/"
+                    "default" => get_site_url() . "/mi-cuenta/orders/"
                 ),
 
 // Ambiente de Desarrollo
@@ -186,7 +194,12 @@ function pluspagos_init_gateway_class() {
             global $woocommerce;
             $order = wc_get_order($order_id);
 
-            $order->reduce_order_stock();
+            // Usar los nuevos métodos HPOS
+            if (method_exists($order, 'get_data_store')) {
+                $order->get_data_store()->reduce_order_stock($order);
+            } else {
+                $order->reduce_order_stock();
+            }
 
             WC()->cart->empty_cart();
 
@@ -263,20 +276,29 @@ function pluspagos_init_gateway_class() {
             header("HTTP/1.1 200 OK");
             $data = json_decode(file_get_contents("php://input"), true);
             $orderAux = explode("-", $data["TransaccionComercioId"]);
+            
+            // Usar el nuevo método de obtención de orden compatible con HPOS
             $order = wc_get_order($orderAux[0]);
-            $order->add_order_note("Datos enviados por PlusPago" . json_encode($data));
-            $estadoPlusPago = $data["EstadoId"];
-            if ($estadoPlusPago == 3) {
-                $order->payment_complete();
-                $order->reduce_order_stock();
-                $order->update_status("completed", "Pago Confirmado.");
-            } elseif ($estadoPlusPago == 2 || $estadoPlusPago == 10) {
-                $order->update_status("processing", "Procesando el pago.");
-            } elseif ($estadoPlusPago == 7 || $estadoPlusPago == 8 || $estadoPlusPago == 11 || $estadoPlusPago == 4) {
-                $order->update_status("cancelled", "Pago cancelado o expirado.");
-            } elseif ($estadoPlusPago == 5 || $estadoPlusPago == 6) {
-                $order->update_status("pending", "Error de Hash al realizar el proceso de pago");
+            if (!$order) {
+                return;
             }
+
+            // Usar métodos compatibles con HPOS para actualizar el estado
+            $order->add_order_note("Datos enviados por PlusPago: " . json_encode($data));
+            $estadoPlusPago = $data["EstadoId"];
+            
+            if ($estadoPlusPago == 3) {
+                $order->set_status("completed", "Pago Confirmado.");
+                $order->payment_complete();
+            } elseif ($estadoPlusPago == 2 || $estadoPlusPago == 10) {
+                $order->set_status("processing", "Procesando el pago.");
+            } elseif ($estadoPlusPago == 7 || $estadoPlusPago == 8 || $estadoPlusPago == 11 || $estadoPlusPago == 4) {
+                $order->set_status("cancelled", "Pago cancelado o expirado.");
+            } elseif ($estadoPlusPago == 5 || $estadoPlusPago == 6) {
+                $order->set_status("pending", "Error de Hash al realizar el proceso de pago");
+            }
+            
+            $order->save();
             update_option("webhook_debug", $data);
         }
     }
@@ -317,15 +339,12 @@ class AESEncrypter {
     }
 }
 
-/*
 /**
  * Clase SHA256Encript
  * Esta clase se utiliza para generar un hash SHA256 para el proceso de pago.
  * Toma como entrada la dirección IP, clave secreta, ID de comercio, ID de sucursal y el monto.
  * El hash se genera concatenando estos valores y aplicando el algoritmo SHA256.
  */
-*/
-
 class SHA256Encript {
     public function Generate($ipAddress, $secretKey, $comercio, $sucursal, $amount) {
         $ipAddress = $this->getRealIpAddr();
@@ -362,14 +381,174 @@ function pluspagos_add_details_link($links) {
 add_action('admin_menu', 'macrocdp_add_admin_menu');
 
 function macrocdp_add_admin_menu() {
+    $icon_url = plugins_url('assets/img/icon.svg', __FILE__);
+    
+    // Menú principal
     add_menu_page(
         'Macro Click de Pago for WooCommerce',      
         'Macro Click de Pago',      
         'manage_options',           
         'macrocdp_admin_menu',      
         'macrocdp_admin_menu_page', 
-        'dashicons-money-alt' // Usando un dashicon de WordPress en lugar de SVG
+        $icon_url
     );
+
+    // Submenú "Detalles" (mismo que la página principal)
+    add_submenu_page(
+        'macrocdp_admin_menu',
+        'Detalles',
+        'Detalles',
+        'manage_options',
+        'macrocdp_admin_menu'
+    );
+
+    // Submenú "Documentación"
+    add_submenu_page(
+        'macrocdp_admin_menu',
+        'Documentación',
+        'Documentación',
+        'manage_options',
+        'macrocdp_documentation',
+        'macrocdp_documentation_page'
+    );
+}
+
+// Agregar la función para la página de documentación
+function macrocdp_documentation_page() {
+    ?>
+    <div class="wrap macrocdp-admin">
+        <h1><img src="<?php echo plugins_url('assets/img/macro-logo.png', __FILE__); ?>" class="macrocdp-logo" /> Documentación de Macro Click de Pago</h1>
+        
+        <div class="documentation-grid">
+            <!-- Guía de Estado del Sistema -->
+            <div class="card full-width">
+                <h2><span class="dashicons dashicons-info-outline"></span> Guía de Estado del Sistema</h2>
+                <div class="doc-section">
+                    <h3>Indicadores de Estado</h3>
+                    <dl class="status-guide">
+                        <dt>Versión Plugin</dt>
+                        <dd>Muestra la versión actual instalada del plugin Macro Click de Pago.</dd>
+                        
+                        <dt>WooCommerce</dt>
+                        <dd>Indica si WooCommerce está activo en el sistema. Es necesario para el funcionamiento del plugin.</dd>
+                        
+                        <dt>Estado WooCommerce</dt>
+                        <dd>Muestra si la tienda está en modo desarrollo o producción según la configuración de WooCommerce.</dd>
+                        
+                        <dt>Gateway</dt>
+                        <dd>Indica si la pasarela de pago está activada y lista para recibir pagos.</dd>
+                        
+                        <dt>Modo Gateway</dt>
+                        <dd>Muestra si la pasarela está en modo pruebas (desarrollo) o producción.</dd>
+                        
+                        <dt>SSL</dt>
+                        <dd>Verifica si el sitio tiene un certificado SSL activo, necesario para procesar pagos en producción.</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- Documentación del README -->
+            <div class="card full-width">
+                <h2><span class="dashicons dashicons-book"></span> Manual de Usuario</h2>
+                <div class="doc-section">
+                    <?php
+                    $readme_path = plugin_dir_path(__FILE__) . 'README.md';
+                    if (file_exists($readme_path)) {
+                        // Requiere el parseador de Markdown
+                        require_once plugin_dir_path(__FILE__) . 'includes/Parsedown.php';
+                        $parsedown = new Parsedown();
+                        echo $parsedown->text(file_get_contents($readme_path));
+                    } else {
+                        echo '<p>La documentación no está disponible.</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+
+// Agregar estilos para el icono del menú
+add_action('admin_head', 'macrocdp_admin_icon_style');
+function macrocdp_admin_icon_style() {
+    echo '<style>
+        #adminmenu .toplevel_page_macrocdp_admin_menu img {
+            width: 20px;
+            height: 20px;
+            padding-top: 7px;
+        }
+    </style>';
+}
+
+// Agregar soporte para estadísticas
+add_action('wp_ajax_macrocdp_get_stats', 'macrocdp_get_stats_ajax');
+function macrocdp_get_stats_ajax() {
+    check_ajax_referer('macrocdp_stats', 'nonce');
+    
+    $period = $_GET['period'] ?? 'week';
+    $stats = macrocdp_get_period_stats($period);
+    
+    wp_send_json_success($stats);
+}
+
+function macrocdp_get_period_stats($period) {
+    $end_date = current_time('mysql');
+    
+    switch($period) {
+        case 'day':
+            $start_date = date('Y-m-d 00:00:00', strtotime('-1 day'));
+            $group_by = 'HOUR';
+            break;
+        case 'week':
+            $start_date = date('Y-m-d 00:00:00', strtotime('-7 days'));
+            $group_by = 'DAY';
+            break;
+        case 'month':
+            $start_date = date('Y-m-d 00:00:00', strtotime('-30 days'));
+            $group_by = 'DAY';
+            break;
+        case 'semester':
+            $start_date = date('Y-m-d 00:00:00', strtotime('-6 months'));
+            $group_by = 'MONTH';
+            break;
+        case 'year':
+            $start_date = date('Y-m-d 00:00:00', strtotime('-1 year'));
+            $group_by = 'MONTH';
+            break;
+        default:
+            $start_date = date('Y-m-d 00:00:00', strtotime('-7 days'));
+            $group_by = 'DAY';
+    }
+    
+    $orders = wc_get_orders(array(
+        'payment_method' => 'pluspagos_gateway',
+        'date_created' => $start_date . '...' . $end_date,
+        'status' => array('completed', 'processing'),
+    ));
+
+    // Procesar datos para el gráfico
+    $stats = array(
+        'labels' => array(),
+        'values' => array(),
+        'totalSales' => 0,
+        'totalOrders' => count($orders),
+        'average' => 0
+    );
+    
+    foreach($orders as $order) {
+        $date = $order->get_date_created()->date_i18n('Y-m-d');
+        if (!isset($stats['values'][$date])) {
+            $stats['values'][$date] = 0;
+        }
+        $stats['values'][$date] += $order->get_total();
+        $stats['totalSales'] += $order->get_total();
+    }
+    
+    $stats['average'] = $stats['totalOrders'] > 0 ? 
+        $stats['totalSales'] / $stats['totalOrders'] : 0;
+    
+    return $stats;
 }
 
 function macrocdp_admin_menu_page() {
@@ -395,9 +574,40 @@ function macrocdp_admin_menu_page() {
                         </span>
                     </div>
                     <div class="status-item">
+                        <span class="label">Estado WooCommerce:</span>
+                        <?php 
+                        $wc_status = get_option('woocommerce_store_address') ? 'live' : 'test';
+                        ?>
+                        <span class="value mode-<?php echo $wc_status; ?>">
+                            <?php echo $wc_status === 'test' ? '🔧 Desarrollo' : '🏪 Tienda Activa'; ?>
+                        </span>
+                    </div>
+                    <div class="status-item">
                         <span class="label">Modo:</span>
-                        <span class="value mode-<?php echo get_option('woocommerce_pluspagos_gateway_settings')['testmode'] === 'yes' ? 'test' : 'live'; ?>">
-                            <?php echo get_option('woocommerce_pluspagos_gateway_settings')['testmode'] === 'yes' ? '🔧 Pruebas' : '🚀 Producción'; ?>
+                        <?php 
+                        $gateway = new WC_PlusPagos_Gateway();
+                        $testmode = $gateway->testmode;
+                        ?>
+                        <span class="value mode-<?php echo $testmode ? 'test' : 'live'; ?>">
+                            <?php echo $testmode ? '🔧 Modo Desarrollo' : '🚀 Producción'; ?>
+                        </span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Gateway:</span>
+                        <?php 
+                        $enabled = $gateway->enabled === 'yes';
+                        ?>
+                        <span class="value <?php echo $enabled ? 'active' : 'inactive'; ?>">
+                            <?php echo $enabled ? '✓ Activado' : '✗ Desactivado'; ?>
+                        </span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Modo Gateway:</span>
+                        <?php 
+                        $testmode = $gateway->testmode;
+                        ?>
+                        <span class="value mode-<?php echo $testmode ? 'test' : 'live'; ?>">
+                            <?php echo $testmode ? '🔧 Desarrollo' : '🚀 Producción'; ?>
                         </span>
                     </div>
                     <div class="status-item">
@@ -455,62 +665,114 @@ function macrocdp_admin_menu_page() {
                     <a href="<?php echo admin_url('admin.php?page=wc-status'); ?>" class="button">
                         <span class="dashicons dashicons-analytics"></span> Estado WooCommerce
                     </a>
-                    <a href="https://github.com/lucianokatze/macroclickdepago-for-woocommerce" class="button" target="_blank">
+                    <a href="<?php echo admin_url('admin.php?page=macrocdp_documentation'); ?>" class="button">
                         <span class="dashicons dashicons-book"></span> Documentación
                     </a>
                 </div>
             </div>
 
-            <!-- Últimas Transacciones -->
-            <div class="card full-width">
-                <h2><span class="dashicons dashicons-list-view"></span> Últimas Transacciones</h2>
-                <?php 
-                $orders = wc_get_orders(array(
-                    'payment_method' => 'pluspagos_gateway',
-                    'limit' => 10
-                ));
-                
-                if (!empty($orders)) : ?>
-                    <table class="widefat striped">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Total</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($orders as $order) : ?>
+            <!-- Estadísticas Mejoradas -->
+            <div class="full-width stats-detailed">
+                <h2><span class="dashicons dashicons-chart-bar"></span> Estadísticas Detalladas</h2>
+                <div class="stats-controls">
+                    <select id="macrocdp-stats-period">
+                        <option value="day">Hoy</option>
+                        <option value="week" selected>Esta semana</option>
+                        <option value="month">Este mes</option>
+                        <option value="semester">Último semestre</option>
+                        <option value="year">Este año</option>
+                    </select>
+                </div>
+                <div class="stats-container">
+                    <?php if (empty($total_orders)) : ?>
+                        <div class="placeholder-chart">
+                            <div class="placeholder-message">
+                                <span class="dashicons dashicons-chart-line"></span>
+                                <p>Aún no hay datos para mostrar</p>
+                                <p class="placeholder-subtitle">Aquí se mostrarán las estadísticas una vez que comiences a recibir pagos</p>
+                            </div>
+                            <div class="placeholder-graph">
+                                <!-- Gráfico de ejemplo -->
+                                <svg viewBox="0 0 300 100" class="placeholder-svg">
+                                    <polyline
+                                        fill="none"
+                                        stroke="#ddd"
+                                        stroke-width="2"
+                                        points="0,80 50,60 100,70 150,50 200,40 250,30 300,20"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    <?php else : ?>
+                        <canvas id="macrocdp-sales-chart"></canvas>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="flex-container">
+                <!-- Últimas Transacciones -->
+                <div class="card half-width">
+                    <h2><span class="dashicons dashicons-list-view"></span> Últimas Transacciones</h2>
+                    <?php 
+                    // Actualizar las consultas de órdenes para HPOS
+                    $query_args = array(
+                        'payment_method' => 'pluspagos_gateway',
+                        'limit' => 10,
+                        'type' => 'shop_order',
+                    );
+                    
+                    $orders = wc_get_orders($query_args);
+                    
+                    if (!empty($orders)) : ?>
+                        <table class="widefat striped">
+                            <thead>
                                 <tr>
-                                    <td>#<?php echo $order->get_id(); ?></td>
-                                    <td><?php echo $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(); ?></td>
-                                    <td><span class="order-status status-<?php echo $order->get_status(); ?>"><?php echo wc_get_order_status_name($order->get_status()); ?></span></td>
-                                    <td><?php echo $order->get_formatted_order_total(); ?></td>
-                                    <td><?php echo $order->get_date_created()->date_i18n('Y-m-d H:i'); ?></td>
-                                    <td>
-                                        <a href="<?php echo $order->get_edit_order_url(); ?>" class="button button-small">Ver</a>
-                                    </td>
+                                    <th>Order ID</th>
+                                    <th>Cliente</th>
+                                    <th>Estado</th>
+                                    <th>Total</th>
+                                    <th>Fecha</th>
+                                    <th>Acciones</th>
                                 </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                <?php else : ?>
-                    <p>No hay transacciones recientes.</p>
-                <?php endif; ?>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($orders as $order) : ?>
+                                    <tr>
+                                        <td>#<?php echo $order->get_id(); ?></td>
+                                        <td><?php echo $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(); ?></td>
+                                        <td><span class="order-status status-<?php echo $order->get_status(); ?>"><?php echo wc_get_order_status_name($order->get_status()); ?></span></td>
+                                        <td><?php echo $order->get_formatted_order_total(); ?></td>
+                                        <td><?php echo $order->get_date_created()->date_i18n('Y-m-d H:i'); ?></td>
+                                        <td>
+                                            <a href="<?php echo $order->get_edit_order_url(); ?>" class="button button-small">Ver</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    <?php else : ?>
+                        <p>No hay transacciones recientes.</p>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="card half-width">
+                    <h2><span class="dashicons dashicons-info"></span> Aviso Legal</h2>
+                    <div class="disclaimer-content" style="padding: 15px;">
+                        <p><strong>Advertencia:</strong> Este plugin no es un producto oficial del Banco Macro y no está afiliado, asociado, autorizado, respaldado por, o de ninguna manera oficialmente conectado con el Banco Macro S.A.</p>
+                        <p>Los nombres de productos, logos y marcas son propiedad de sus respectivos dueños. Los nombres de empresas, productos y servicios utilizados en este plugin son solo para propósitos de identificación.</p>
+                        <p>Este es un proyecto de código abierto desarrollado por <?php echo 'Luciano Katze'; ?> y está disponible bajo la <a href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank">Licencia Pública General de GNU v2.0</a>.</p>
+                        <p>Para más información o contribuciones, visite: <a href="<?php echo esc_url('https://github.com/lucianokatze/macroclickdepago-for-woocommerce'); ?>" target="_blank">GitHub Repository</a></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <?php
+    // Encolar scripts necesarios
+    wp_enqueue_script('chart-js', 'https://cdn.jsdelivr.net/npm/chart.js', array(), '3.7.0', true);
+    wp_enqueue_script('macrocdp-admin-stats', plugins_url('assets/js/admin-stats.js', __FILE__), array('jquery', 'chart-js'), '1.0.0', true);
+    wp_localize_script('macrocdp-admin-stats', 'macrocdpStats', array(
+        'nonce' => wp_create_nonce('macrocdp_stats')
+      ));
 }
-
-// Agregar estilos de admin
-function macrocdp_admin_styles() {
-    $screen = get_current_screen();
-    if ($screen->id === 'toplevel_page_macrocdp_admin_menu') {
-        wp_enqueue_style('macrocdp-admin-css', plugins_url('assets/css/admin.css', __FILE__));
-    }
-}
-add_action('admin_enqueue_scripts', 'macrocdp_admin_styles');
