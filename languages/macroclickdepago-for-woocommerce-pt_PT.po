@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Macro Click de Pago for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/lucianokatze/macroclickdepago-for-woocommerce/issues\n"
+"POT-Creation-Date: 2023-01-01 12:00+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Luciano Sanchez <gi.gothic@gmail.com>\n"
+"Language-Team: \n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "Activar/Desactivar"
+msgstr "Activar/Desactivar"
+
+msgid "Activar la pasarela de pagos"
+msgstr "Activar o gateway de pagamento"
+
+msgid "Si desea activar Macro Click de pago como medio de cobro el check debe estar activo."
+msgstr "Se pretende activar o Macro Click de Pago como método de pagamento, a caixa de selecção deve estar activa."
+
+msgid "Título"
+msgstr "Título"
+
+msgid "Esto controla el título que el usuario ve durante el proceso de pago."
+msgstr "Isto controla o título que o utilizador vê durante o processo de pagamento."
+
+msgid "Macro Click de Pago"
+msgstr "Macro Click de Pago"
+
+msgid "Descripción"
+msgstr "Descrição"
+
+msgid "URL para cancelar el pedido"
+msgstr "URL para cancelar a encomenda"
+
+msgid "Modo de Testeo"
+msgstr "Modo de Teste"
+
+msgid "Activar el modo de desarrollo"
+msgstr "Activar o modo de desenvolvimento"
+
+msgid "Sandbox IDENTIFICADOR DE COMERCIO"
+msgstr "Sandbox IDENTIFICADOR DO COMERCIANTE"
+
+msgid "URL de Test"
+msgstr "URL de Teste"
+
+msgid "Estado del Sistema"
+msgstr "Estado do Sistema"
+
+msgid "Estadísticas"
+msgstr "Estatísticas"
+
+msgid "Transacciones Totales"
+msgstr "Transacções Totais"
+
+msgid "Pagos Completados"
+msgstr "Pagamentos Concluídos"
+
+msgid "Ventas Totales"
+msgstr "Vendas Totais"
+
+msgid "Acciones Rápidas"
+msgstr "Acções Rápidas"
+
+msgid "Configurar Gateway"
+msgstr "Configurar Gateway"
+
+msgid "Estado WooCommerce"
+msgstr "Estado WooCommerce"
+
+msgid "Documentación"
+msgstr "Documentação"
+
+msgid "Aviso Legal"
+msgstr "Aviso Legal"

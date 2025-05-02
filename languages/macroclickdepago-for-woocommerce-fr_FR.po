@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Macro Click de Pago for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/lucianokatze/macroclickdepago-for-woocommerce/issues\n"
+"POT-Creation-Date: 2023-01-01 12:00+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Luciano Sanchez <gi.gothic@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "Activar/Desactivar"
+msgstr "Activer/Désactiver"
+
+msgid "Activar la pasarela de pagos"
+msgstr "Activer la passerelle de paiement"
+
+msgid "Si desea activar Macro Click de pago como medio de cobro el check debe estar activo."
+msgstr "Si vous souhaitez activer Macro Click de Pago comme moyen de paiement, la case doit être cochée."
+
+msgid "Título"
+msgstr "Titre"
+
+msgid "Esto controla el título que el usuario ve durante el proceso de pago."
+msgstr "Ceci contrôle le titre que l'utilisateur voit pendant le processus de paiement."
+
+msgid "Macro Click de Pago"
+msgstr "Macro Click de Pago"
+
+msgid "Descripción"
+msgstr "Description"
+
+msgid "URL para cancelar el pedido"
+msgstr "URL d'annulation de commande"
+
+msgid "Modo de Testeo"
+msgstr "Mode Test"
+
+msgid "Activar el modo de desarrollo"
+msgstr "Activer le mode développement"
+
+msgid "Sandbox IDENTIFICADOR DE COMERCIO"
+msgstr "Sandbox IDENTIFIANT COMMERCE"
+
+msgid "URL de Test"
+msgstr "URL de Test"
+
+msgid "Estado del Sistema"
+msgstr "État du Système"
+
+msgid "Estadísticas"
+msgstr "Statistiques"
+
+msgid "Transacciones Totales"
+msgstr "Transactions Totales"
+
+msgid "Pagos Completados"
+msgstr "Paiements Complétés"
+
+msgid "Ventas Totales"
+msgstr "Ventes Totales"
+
+msgid "Acciones Rápidas"
+msgstr "Actions Rapides"
+
+msgid "Configurar Gateway"
+msgstr "Configurer la Passerelle"
+
+msgid "Estado WooCommerce"
+msgstr "État WooCommerce"
+
+msgid "Documentación"
+msgstr "Documentation"
+
+msgid "Aviso Legal"
+msgstr "Mentions Légales"

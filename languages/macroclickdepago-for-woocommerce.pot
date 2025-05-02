@@ -1,0 +1,252 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Macro Click de Pago for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/lucianokatze/macroclickdepago-for-woocommerce/issues\n"
+"POT-Creation-Date: 2023-01-01 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Activar/Desactivar"
+msgstr ""
+
+msgid "Activar la pasarela de pagos"
+msgstr ""
+
+msgid "Si desea activar Macro Click de pago como medio de cobro el check debe estar activo."
+msgstr ""
+
+msgid "Título"
+msgstr ""
+
+msgid "Esto controla el título que el usuario ve durante el proceso de pago."
+msgstr ""
+
+msgid "Macro Click de Pago"
+msgstr ""
+
+msgid "Descripción"
+msgstr ""
+
+msgid "Esto controla la descripción que el usuario ve durante el proceso de pago."
+msgstr ""
+
+msgid "Paga con Macro Click de Pago, si tenes Macro aprovecha los beneficios exclusivos."
+msgstr ""
+
+#. Admin menu items
+msgid "Macro Click de Pago for WooCommerce"
+msgstr ""
+
+msgid "Macro Click de Pago"
+msgstr ""
+
+msgid "Detalles"
+msgstr ""
+
+msgid "Documentación"
+msgstr ""
+
+#. Documentation page
+msgid "Manual de Usuario"
+msgstr ""
+
+msgid "Guía de Estado del Sistema"
+msgstr ""
+
+msgid "Indicadores de Estado"
+msgstr ""
+
+#. Status indicators
+msgid "Versión Plugin"
+msgstr ""
+
+msgid "Estado WooCommerce"
+msgstr ""
+
+msgid "Gateway"
+msgstr ""
+
+msgid "Modo Gateway"
+msgstr ""
+
+msgid "SSL"
+msgstr ""
+
+#. Button texts
+msgid "Configurar Gateway"
+msgstr ""
+
+msgid "Estado WooCommerce"
+msgstr ""
+
+msgid "Documentación"
+msgstr ""
+
+#. Statistics texts
+msgid "Estadísticas"
+msgstr ""
+
+msgid "Estadísticas Detalladas"
+msgstr ""
+
+msgid "Transacciones Totales"
+msgstr ""
+
+msgid "Pagos Completados"
+msgstr ""
+
+msgid "Ventas Totales"
+msgstr ""
+
+#. Time periods
+msgid "Hoy"
+msgstr ""
+
+msgid "Esta semana"
+msgstr ""
+
+msgid "Este mes"
+msgstr ""
+
+msgid "Último semestre"
+msgstr ""
+
+msgid "Este año"
+msgstr ""
+
+#. Table headers
+msgid "Cliente"
+msgstr ""
+
+msgid "Estado"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Fecha"
+msgstr ""
+
+msgid "Acciones"
+msgstr ""
+
+msgid "Ver"
+msgstr ""
+
+#. Empty state messages
+msgid "Aún no hay datos para mostrar"
+msgstr ""
+
+msgid "Aquí se mostrarán las estadísticas una vez que comiences a recibir pagos"
+msgstr ""
+
+msgid "No hay transacciones recientes."
+msgstr ""
+
+#. Status messages
+msgid "✓ Activo"
+msgstr ""
+
+msgid "✗ Inactivo"
+msgstr ""
+
+msgid "🔧 Desarrollo"
+msgstr ""
+
+msgid "🏪 Tienda Activa"
+msgstr ""
+
+msgid "🔒 Activo"
+msgstr ""
+
+msgid "⚠️ Inactivo"
+msgstr ""
+
+#. Documentation section
+msgid "Guía de Estado del Sistema"
+msgstr ""
+
+msgid "Indicadores de Estado"
+msgstr ""
+
+msgid "Versión Plugin"
+msgstr ""
+
+msgid "Muestra la versión actual instalada del plugin Macro Click de Pago."
+msgstr ""
+
+msgid "WooCommerce"
+msgstr ""
+
+msgid "Indica si WooCommerce está activo en el sistema. Es necesario para el funcionamiento del plugin."
+msgstr ""
+
+msgid "Estado WooCommerce"
+msgstr ""
+
+msgid "Muestra si la tienda está en modo desarrollo o producción según la configuración de WooCommerce."
+msgstr ""
+
+msgid "Gateway"
+msgstr ""
+
+msgid "Indica si la pasarela de pago está activada y lista para recibir pagos."
+msgstr ""
+
+msgid "Modo Gateway"
+msgstr ""
+
+msgid "Muestra si la pasarela está en modo pruebas (desarrollo) o producción."
+msgstr ""
+
+msgid "SSL"
+msgstr ""
+
+msgid "Verifica si el sitio tiene un certificado SSL activo, necesario para procesar pagos en producción."
+msgstr ""
+
+#. Gateway configuration fields
+msgid "URL para cancelar el pedido"
+msgstr ""
+
+msgid "Ingrese la URL en caso de cancelar el pedido"
+msgstr ""
+
+msgid "Modo de Testeo"
+msgstr ""
+
+msgid "Activar el modo de desarrollo"
+msgstr ""
+
+msgid "Coloque la pasarela de pagos en modo de prueba utilizando claves API de prueba."
+msgstr ""
+
+msgid "Sandbox IDENTIFICADOR DE COMERCIO"
+msgstr ""
+
+msgid "URL de Test"
+msgstr ""
+
+msgid "Ingrese la URL de test para el gateway."
+msgstr ""
+
+msgid "Producción - Secret Key"
+msgstr ""
+
+msgid "Producción IDENTIFICADOR DE COMERCIO"
+msgstr ""
+
+msgid "Nombre Comercio"
+msgstr ""
+
+msgid "URL de Producción"
+msgstr ""
+
+msgid "Ingrese la URL de producción para el gateway."
+msgstr ""

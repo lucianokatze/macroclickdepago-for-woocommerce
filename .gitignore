@@ -1,5 +1,6 @@
 *.zip
 changelog.md
+change.md
 
 *.log
 *.tmp

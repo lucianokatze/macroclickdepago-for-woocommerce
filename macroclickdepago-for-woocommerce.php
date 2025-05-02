@@ -3,18 +3,30 @@
  * Plugin Name: Macro Click de Pago for WooCommerce
  * Plugin URI: https://github.com/lucianokatze/macroclickdepago-for-woocommerce
  * Description: Una pasarela de pago personalizada para integrar con WooCommerce y Banco Macro.
- * Version: 1.0.1
+ * Version: 1.0.1.1
  * Author: Luciano Katze
  * Author URI: https://github.com/lucianokatze
  * License: GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Requires at least: 5.0
+ * Text Domain: macroclickdepago-for-woocommerce
+ * Domain Path: /languages
+ * Requires at least: 6.0
  * Tested up to: 6.3
  * Requires PHP: 7.4
  * WC requires at least: 4.0
  * WC tested up to: 7.0
  * WooCommerce HPOS Compatible: true
  */
+
+// Cargar traducciones
+add_action('init', 'macrocdp_load_textdomain');
+function macrocdp_load_textdomain() {
+    load_plugin_textdomain(
+        'macroclickdepago-for-woocommerce',
+        false,
+        dirname(plugin_basename(__FILE__)) . '/languages'
+    );
+}
 
 // Agregar soporte HPOS
 add_action('before_woocommerce_init', function() {
@@ -72,75 +84,75 @@ function pluspagos_init_gateway_class() {
                 // Configuración de Avisos del Plugin
 
                 "enabled" => array(
-                    "title" => "Activar/Desactivar",
-                    "label" => "Activar la pasarela de pagos",
+                    "title" => __("Activar/Desactivar", 'macroclickdepago-for-woocommerce'),
+                    "label" => __("Activar la pasarela de pagos", 'macroclickdepago-for-woocommerce'),
                     "type" => "checkbox",
-                    "description" => "Si desea activar Macro Click de pago como medio de cobro el check debe estar activo.",
+                    "description" => __("Si desea activar Macro Click de pago como medio de cobro el check debe estar activo.", 'macroclickdepago-for-woocommerce'),
                     "default" => "no"
                 ),
                 "title" => array(
-                    "title" => "Titulo",
+                    "title" => __("Titulo", 'macroclickdepago-for-woocommerce'),
                     "type" => "text",
-                    "description" => "Esto controla el título que el usuario ve durante el proceso de pago.",
-                    "default" => "Macro Click de Pago",
+                    "description" => __("Esto controla el título que el usuario ve durante el proceso de pago.", 'macroclickdepago-for-woocommerce'),
+                    "default" => __("Macro Click de Pago", 'macroclickdepago-for-woocommerce'),
                     "desc_tip" => true
                 ),
                 "description" => array(
-                    "title" => "Descripción",
+                    "title" => __("Descripción", 'macroclickdepago-for-woocommerce'),
                     "type" => "textarea",
-                    "description" => "Esto controla la descripción que el usuario ve durante el proceso de pago.",
-                    "default" => "Paga con Macro Click de Pago, si tenes Macro aprovecha los beneficios exclusivos."
+                    "description" => __("Esto controla la descripción que el usuario ve durante el proceso de pago.", 'macroclickdepago-for-woocommerce'),
+                    "default" => __("Paga con Macro Click de Pago, si tenes Macro aprovecha los beneficios exclusivos.", 'macroclickdepago-for-woocommerce')
                 ),
 
                 "callbackCancelURL" => array(
-                    "title" => "URL para cancelar el pedido",
+                    "title" => __("URL para cancelar el pedido", 'macroclickdepago-for-woocommerce'),
                     "type" => "text",
-                    "description" => "Ingrese la URL en caso de cancelar el pedido",
+                    "description" => __("Ingrese la URL en caso de cancelar el pedido", 'macroclickdepago-for-woocommerce'),
                     "default" => get_site_url() . "/mi-cuenta/orders/"
                 ),
 
 // Ambiente de Desarrollo
 
                 "testmode" => array(
-                    "title" => "Modo de Testeo",
-                    "label" => "Activar el modo de desarrollo",
+                    "title" => __("Modo de Testeo", 'macroclickdepago-for-woocommerce'),
+                    "label" => __("Activar el modo de desarrollo", 'macroclickdepago-for-woocommerce'),
                     "type" => "checkbox",
-                    "description" => "Coloque la pasarela de pagos en modo de prueba utilizando claves API de prueba.",
+                    "description" => __("Coloque la pasarela de pagos en modo de prueba utilizando claves API de prueba.", 'macroclickdepago-for-woocommerce'),
                     "default" => "yes",
                     "desc_tip" => true
                 ),
                 
                 "test_comercio_key" => array(
-                    "title" => "Sandbox IDENTIFICADOR DE COMERCIO",
+                    "title" => __("Sandbox IDENTIFICADOR DE COMERCIO", 'macroclickdepago-for-woocommerce'),
                     "type" => "text"
                 ),
 
                 "test_url" => array(
-                    "title" => "URL de Test",
+                    "title" => __("URL de Test", 'macroclickdepago-for-woocommerce'),
                     "type" => "text",
-                    "description" => "Ingrese la URL de test para el gateway.",
+                    "description" => __("Ingrese la URL de test para el gateway.", 'macroclickdepago-for-woocommerce'),
                     "default" => "https://sandboxpp.asjservicios.com.ar/"
                 ),
 
 // Ambiente de Producción
 
                 "publishable_key" => array(
-                    "title" => "Producción - Secret Key",
+                    "title" => __("Producción - Secret Key", 'macroclickdepago-for-woocommerce'),
                     "type" => "text"
                 ),
                 "comercio_key" => array(
-                    "title" => "Producción IDENTIFICADOR DE COMERCIO",
+                    "title" => __("Producción IDENTIFICADOR DE COMERCIO", 'macroclickdepago-for-woocommerce'),
                     "type" => "text"
                 ),
                 "comercio_name" => array(
-                    "title" => "Nombre Comercio",
+                    "title" => __("Nombre Comercio", 'macroclickdepago-for-woocommerce'),
                     "type" => "text"
                 ),
 
                 "live_url" => array(
-                    "title" => "URL de Producción",
+                    "title" => __("URL de Producción", 'macroclickdepago-for-woocommerce'),
                     "type" => "text",
-                    "description" => "Ingrese la URL de producción para el gateway.",
+                    "description" => __("Ingrese la URL de producción para el gateway.", 'macroclickdepago-for-woocommerce'),
                     "default" => "https://botonpp.macroclickpago.com.ar/"
                 )
 
@@ -385,19 +397,19 @@ function macrocdp_add_admin_menu() {
     
     // Menú principal
     add_menu_page(
-        'Macro Click de Pago for WooCommerce',      
-        'Macro Click de Pago',      
-        'manage_options',           
-        'macrocdp_admin_menu',      
-        'macrocdp_admin_menu_page', 
+        __('Macro Click de Pago for WooCommerce', 'macroclickdepago-for-woocommerce'),
+        __('Macro Click de Pago', 'macroclickdepago-for-woocommerce'),
+        'manage_options',
+        'macrocdp_admin_menu',
+        'macrocdp_admin_menu_page',
         $icon_url
     );
 
     // Submenú "Detalles" (mismo que la página principal)
     add_submenu_page(
         'macrocdp_admin_menu',
-        'Detalles',
-        'Detalles',
+        __('Detalles', 'macroclickdepago-for-woocommerce'),
+        __('Detalles', 'macroclickdepago-for-woocommerce'),
         'manage_options',
         'macrocdp_admin_menu'
     );
@@ -405,8 +417,8 @@ function macrocdp_add_admin_menu() {
     // Submenú "Documentación"
     add_submenu_page(
         'macrocdp_admin_menu',
-        'Documentación',
-        'Documentación',
+        __('Documentación', 'macroclickdepago-for-woocommerce'),
+        __('Documentación', 'macroclickdepago-for-woocommerce'),
         'manage_options',
         'macrocdp_documentation',
         'macrocdp_documentation_page'
@@ -422,27 +434,27 @@ function macrocdp_documentation_page() {
         <div class="documentation-grid">
             <!-- Guía de Estado del Sistema -->
             <div class="card full-width">
-                <h2><span class="dashicons dashicons-info-outline"></span> Guía de Estado del Sistema</h2>
+                <h2><span class="dashicons dashicons-info-outline"></span> <?php _e('Guía de Estado del Sistema', 'macroclickdepago-for-woocommerce'); ?></h2>
                 <div class="doc-section">
-                    <h3>Indicadores de Estado</h3>
+                    <h3><?php _e('Indicadores de Estado', 'macroclickdepago-for-woocommerce'); ?></h3>
                     <dl class="status-guide">
-                        <dt>Versión Plugin</dt>
-                        <dd>Muestra la versión actual instalada del plugin Macro Click de Pago.</dd>
+                        <dt><?php _e('Versión Plugin', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Muestra la versión actual instalada del plugin Macro Click de Pago.', 'macroclickdepago-for-woocommerce'); ?></dd>
                         
-                        <dt>WooCommerce</dt>
-                        <dd>Indica si WooCommerce está activo en el sistema. Es necesario para el funcionamiento del plugin.</dd>
+                        <dt><?php _e('WooCommerce', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Indica si WooCommerce está activo en el sistema. Es necesario para el funcionamiento del plugin.', 'macroclickdepago-for-woocommerce'); ?></dd>
                         
-                        <dt>Estado WooCommerce</dt>
-                        <dd>Muestra si la tienda está en modo desarrollo o producción según la configuración de WooCommerce.</dd>
+                        <dt><?php _e('Estado WooCommerce', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Muestra si la tienda está en modo desarrollo o producción según la configuración de WooCommerce.', 'macroclickdepago-for-woocommerce'); ?></dd>
                         
-                        <dt>Gateway</dt>
-                        <dd>Indica si la pasarela de pago está activada y lista para recibir pagos.</dd>
+                        <dt><?php _e('Gateway', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Indica si la pasarela de pago está activada y lista para recibir pagos.', 'macroclickdepago-for-woocommerce'); ?></dd>
                         
-                        <dt>Modo Gateway</dt>
-                        <dd>Muestra si la pasarela está en modo pruebas (desarrollo) o producción.</dd>
+                        <dt><?php _e('Modo Gateway', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Muestra si la pasarela está en modo pruebas (desarrollo) o producción.', 'macroclickdepago-for-woocommerce'); ?></dd>
                         
-                        <dt>SSL</dt>
-                        <dd>Verifica si el sitio tiene un certificado SSL activo, necesario para procesar pagos en producción.</dd>
+                        <dt><?php _e('SSL', 'macroclickdepago-for-woocommerce'); ?></dt>
+                        <dd><?php _e('Verifica si el sitio tiene un certificado SSL activo, necesario para procesar pagos en producción.', 'macroclickdepago-for-woocommerce'); ?></dd>
                     </dl>
                 </div>
             </div>
@@ -561,25 +573,29 @@ function macrocdp_admin_menu_page() {
         <div class="macrocdp-grid">
             <!-- Estado del Sistema -->
             <div class="card">
-                <h2><span class="dashicons dashicons-dashboard"></span> Estado del Sistema</h2>
+                <h2><span class="dashicons dashicons-dashboard"></span> <?php _e('Estado del Sistema', 'macroclickdepago-for-woocommerce'); ?></h2>
                 <div class="macrocdp-status-grid">
                     <div class="status-item">
-                        <span class="label">Versión Plugin:</span>
+                        <span class="label"><?php _e('Versión Plugin:', 'macroclickdepago-for-woocommerce'); ?></span>
                         <span class="value">1.0.1</span>
                     </div>
                     <div class="status-item">
-                        <span class="label">WooCommerce:</span>
+                        <span class="label"><?php _e('WooCommerce:', 'macroclickdepago-for-woocommerce'); ?></span>
                         <span class="value <?php echo is_plugin_active('woocommerce/woocommerce.php') ? 'active' : 'inactive'; ?>">
-                            <?php echo is_plugin_active('woocommerce/woocommerce.php') ? '✓ Activo' : '✗ Inactivo'; ?>
+                            <?php echo is_plugin_active('woocommerce/woocommerce.php') ? 
+                                _e('✓ Activo', 'macroclickdepago-for-woocommerce') : 
+                                _e('✗ Inactivo', 'macroclickdepago-for-woocommerce'); ?>
                         </span>
                     </div>
                     <div class="status-item">
-                        <span class="label">Estado WooCommerce:</span>
+                        <span class="label"><?php _e('Estado WooCommerce:', 'macroclickdepago-for-woocommerce'); ?></span>
                         <?php 
                         $wc_status = get_option('woocommerce_store_address') ? 'live' : 'test';
                         ?>
                         <span class="value mode-<?php echo $wc_status; ?>">
-                            <?php echo $wc_status === 'test' ? '🔧 Desarrollo' : '🏪 Tienda Activa'; ?>
+                            <?php echo $wc_status === 'test' ? 
+                                _e('🔧 Desarrollo', 'macroclickdepago-for-woocommerce') : 
+                                _e('🏪 Tienda Activa', 'macroclickdepago-for-woocommerce'); ?>
                         </span>
                     </div>
                     <div class="status-item">
@@ -621,7 +637,7 @@ function macrocdp_admin_menu_page() {
 
             <!-- Estadísticas -->
             <div class="card">
-                <h2><span class="dashicons dashicons-chart-bar"></span> Estadísticas</h2>
+                <h2><span class="dashicons dashicons-chart-bar"></span> <?php _e('Estadísticas', 'macroclickdepago-for-woocommerce'); ?></h2>
                 <?php
                 $total_orders = wc_get_orders(array(
                     'payment_method' => 'pluspagos_gateway',
@@ -642,22 +658,22 @@ function macrocdp_admin_menu_page() {
                 <div class="macrocdp-stats-grid">
                     <div class="stat-box">
                         <span class="stat-value"><?php echo count($total_orders); ?></span>
-                        <span class="stat-label">Transacciones Totales</span>
+                        <span class="stat-label"><?php _e('Transacciones Totales', 'macroclickdepago-for-woocommerce'); ?></span>
                     </div>
                     <div class="stat-box">
                         <span class="stat-value"><?php echo count($completed_orders); ?></span>
-                        <span class="stat-label">Pagos Completados</span>
+                        <span class="stat-label"><?php _e('Pagos Completados', 'macroclickdepago-for-woocommerce'); ?></span>
                     </div>
                     <div class="stat-box">
                         <span class="stat-value"><?php echo wc_price($total_sales); ?></span>
-                        <span class="stat-label">Ventas Totales</span>
+                        <span class="stat-label"><?php _e('Ventas Totales', 'macroclickdepago-for-woocommerce'); ?></span>
                     </div>
                 </div>
             </div>
 
             <!-- Acciones Rápidas -->
             <div class="card">
-                <h2><span class="dashicons dashicons-admin-tools"></span> Acciones Rápidas</h2>
+                <h2><span class="dashicons dashicons-admin-tools"></span> <?php _e('Acciones Rápidas', 'macroclickdepago-for-woocommerce'); ?></h2>
                 <div class="macrocdp-actions">
                     <a href="<?php echo admin_url('admin.php?page=wc-settings&tab=checkout&section=pluspagos_gateway'); ?>" class="button button-primary">
                         <span class="dashicons dashicons-admin-generic"></span> Configurar Gateway

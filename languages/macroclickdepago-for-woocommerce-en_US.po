@@ -1,0 +1,70 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Macro Click de Pago for WooCommerce 1.0.1\n"
+"Report-Msgid-Bugs-To: https://github.com/lucianokatze/macroclickdepago-for-woocommerce/issues\n"
+"POT-Creation-Date: 2023-01-01 12:00+0000\n"
+"PO-Revision-Date: 2025-05-01 21:25-0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.6\n"
+
+msgid "Activar/Desactivar"
+msgstr "Enable/Disable"
+
+msgid "Activar la pasarela de pagos"
+msgstr "Enable payment gateway"
+
+msgid "Si desea activar Macro Click de pago como medio de cobro el check debe estar activo."
+msgstr "If you want to enable Macro Click de Pago as a payment method, the checkbox must be active."
+
+msgid "Título"
+msgstr "Title"
+
+msgid "Esto controla el título que el usuario ve durante el proceso de pago."
+msgstr "This controls the title that the user sees during checkout."
+
+msgid "Macro Click de Pago"
+msgstr "Macro Click de Pago"
+
+msgid "Estado del Sistema"
+msgstr "System Status"
+
+msgid "Versión Plugin:"
+msgstr "Plugin Version:"
+
+msgid "WooCommerce:"
+msgstr "WooCommerce:"
+
+msgid "✓ Activo"
+msgstr "✓ Active"
+
+msgid "✗ Inactivo"
+msgstr "✗ Inactive"
+
+msgid "Estado WooCommerce:"
+msgstr "WooCommerce Status:"
+
+msgid "🔧 Desarrollo"
+msgstr "🔧 Development"
+
+msgid "🏪 Tienda Activa"
+msgstr "🏪 Active Store"
+
+msgid "Estadísticas"
+msgstr "Statistics"
+
+msgid "Transacciones Totales"
+msgstr "Total Transactions"
+
+msgid "Pagos Completados"
+msgstr "Completed Payments"
+
+msgid "Ventas Totales"
+msgstr "Total Sales"
+
+msgid "Acciones Rápidas"
+msgstr "Quick Actions"

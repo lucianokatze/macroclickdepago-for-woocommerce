@@ -1,6 +1,6 @@
 # Macro Click de Pago for WooCommerce
 
-**Versión:** 1.0.1
+**Versión:** 1.0.1.1
 **Autor:** Luciano Katze  
 **Plugin URI:** [https://github.com/lucianokatze/macroclickdepago-for-woocommerce](https://github.com/lucianokatze/macroclickdepago-for-woocommerce)
 
@@ -108,7 +108,7 @@ Si encuentras algún problema o tienes alguna consulta, por favor revisa la secc
 
 ## Changelog
 
-- **1.0.1:** Versión actual.
+- **1.0.1.1:** Versión actual.
 - **1.0.0:** Versión inicial.
 
 ## Licencia
