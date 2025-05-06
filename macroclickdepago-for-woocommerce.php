@@ -578,7 +578,7 @@ function macrocdp_admin_menu_page() {
                 <div class="macrocdp-status-grid">
                     <div class="status-item">
                         <span class="label"><?php _e('Versión Plugin:', 'macroclickdepago-for-woocommerce'); ?></span>
-                        <span class="value">1.0.1</span>
+                        <span class="value">1.0.2</span>
                     </div>
                     <div class="status-item">
                         <span class="label"><?php _e('WooCommerce:', 'macroclickdepago-for-woocommerce'); ?></span>
