@@ -3,7 +3,7 @@
  * Plugin Name: Macro Click de Pago for WooCommerce
  * Plugin URI: https://github.com/lucianokatze/macroclickdepago-for-woocommerce
  * Description: Una pasarela de pago personalizada para integrar con WooCommerce y Banco Macro.
- * Version: 1.0.1.1
+ * Version: 1.0.2
  * Author: Luciano Katze
  * Author URI: https://github.com/lucianokatze
  * License: GPL-2.0+
@@ -54,7 +54,8 @@ function pluspagos_init_gateway_class() {
     
         public function __construct() {
             $this->id = "pluspagos_gateway"; // ID del gateway
-            $this->icon = apply_filters("woocommerce_pluspagos_icon", plugins_url("img/logos-tarjetas.png", __FILE__));
+            // Ruta al ícono de tarjetas que se muestra en el checkout. Puedes personalizar esta ruta según tu necesidad.
+            $this->icon = apply_filters("woocommerce_pluspagos_icon", plugins_url("assets/img/logo.png", __FILE__));
             $this->has_fields = true; // Si se requieren campos adicionales en el formulario de pago
             $this->method_title = "Macro Click de Pago"; // Título del método de pago
             $this->method_description = "El Sistema de Macro Click de Pago permite a las empresas cobrar por productos y/o servicios vendidos a través de internet utilizando tarjetas de crédito. La plataforma es compatible con VISA (incluyendo Verified by VISA), Mastercard, Diners, American Express, Tarjeta Shopping y Tarjeta Naranja, garantizando el cumplimiento de los estándares internacionales y locales definidos por las marcas de tarjetas mencionadas.";
